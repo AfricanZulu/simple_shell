@@ -11,10 +11,13 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <limits.h>
+#include <string.h>
 
 #define BUFSIZE 1024
 #define TOK_BUFSIZE 128
 #define TOK_DELIM " \t\r\n\a"
+
+void my_prompt(char **argv, char **env);
 
 /* Points to an array of pointers to strings called the "environment" */
 extern char **environ;
@@ -29,16 +32,16 @@ extern char **environ;
  * @counter: lines counter
  * @_environ: environment variable
  * @pid: process ID of the shell
- */
+*/
 typedef struct data
 {
-	char **av;
-	char *input;
-	char **args;
-	int status;
-	int counter;
-	char **_environ;
-	char *pid;
+        char **av;
+        char *input;
+        char **args;
+         int status;
+        int counter;
+        char **_environ;
+        char *pid;
 } data_shell;
 
 /**
@@ -49,8 +52,8 @@ typedef struct data
  */
 typedef struct sep_list_s
 {
-	char separator;
-	struct sep_list_s *next;
+        char separator;
+        struct sep_list_s *next;
 } sep_list;
 
 /**
@@ -61,8 +64,8 @@ typedef struct sep_list_s
  */
 typedef struct line_list_s
 {
-	char *line;
-	struct line_list_s *next;
+        char *line;
+        struct line_list_s *next;
 } line_list;
 
 /**
@@ -72,13 +75,13 @@ typedef struct line_list_s
  * @len_val: length of the value
  * @next: next node
  * Description: single linked list to store variables
- */
+  */
 typedef struct r_var_list
 {
-	int len_var;
-	char *val;
-	int len_val;
-	struct r_var_list *next;
+        int len_var;
+        char *val;
+        int len_val;
+        struct r_var_list *next;
 } r_var;
 
 /**
@@ -88,8 +91,8 @@ typedef struct r_var_list
  */
 typedef struct builtin_s
 {
-	char *name;
-	int (*f)(data_shell *datash);
+        char *name;
+        int (*f)(data_shell *datash);
 } builtin_t;
 
 /* aux_lists.c */
@@ -229,5 +232,4 @@ void aux_help_cd(void);
 
 /* get_help.c */
 int get_help(data_shell *datash);
-
 #endif
