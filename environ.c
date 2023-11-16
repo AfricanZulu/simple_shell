@@ -6,7 +6,7 @@
  *          constant function prototype.
  * Return: Always 0
  */
-int _myenv(info_t *info)
+int _myenv(ino_t *info)
 {
 	print_list_str(info->env);
 	return (0);
@@ -19,7 +19,7 @@ int _myenv(info_t *info)
  *
  * Return: the value
  */
-char *_getenv(info_t *info, const char *name)
+char *_getenv(ino_t *info, const char *name)
 {
 	list_t *node = info->env;
 	char *p;
@@ -41,11 +41,11 @@ char *_getenv(info_t *info, const char *name)
  *        constant function prototype.
  *  Return: Always 0
  */
-int _mysetenv(info_t *info)
+int _mysetenv(ino_t *info)
 {
 	if (info->argc != 3)
 	{
-		_eputs("Incorrect number of arguements\n");
+		_puts("Incorrect number of arguements\n");
 		return (1);
 	}
 	if (_setenv(info, info->argv[1], info->argv[2]))
@@ -65,7 +65,7 @@ int _myunsetenv(info_t *info)
 
 	if (info->argc == 1)
 	{
-		_eputs("Too few arguements.\n");
+		_puts("Too few arguements.\n");
 		return (1);
 	}
 	for (i = 1; i <= info->argc; i++)
