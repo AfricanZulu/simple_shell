@@ -1,74 +1,100 @@
 #include "shell.h"
-
 /**
- * interactive - returns true if shell is interactive mode
- * @info: struct address
- *
- * Return: 1 if interactive mode, 0 otherwise
+ * get_length - we are defining our get_length here
+ *@number:this ho;ds the number of total item gotten
+ *Return:returns the length of a number
  */
-int interactive(info_t *info)
+int get_length(int number)
 {
-	return (isatty(STDIN_FILENO) && info->readfd <= 2);
+unsigned int num1;
+int len = 1;
+
+if (number < 0)
+{
+len++;
+num1 = number * -1;
+}
+else
+{
+num1 = number;
+}
+while (num1 > 9)
+{
+len++;
+num1 = num1 / 10;
+}
+return (len);
 }
 
 /**
- * is_delim - checks if character is a delimeter
- * @c: the char to check
- * @delim: the delimeter string
- * Return: 1 if true, 0 if false
+ * aux_itoa - convert function into string
+ * @n:number of strings to be converted
+ * Return: returns converted strings
  */
-int is_delim(char c, char *delim)
+
+char *aux_itoa(int n)
 {
-	while (*delim)
-		if (*delim++ == c)
-			return (1);
-	return (0);
+
+unsigned int num1;
+int length = get_length(n);
+char *buffer;
+
+buffer = malloc(sizeof(char) * (length + 1));
+if (buffer == NULL)
+return (NULL);
+
+*(buffer + length) = '\0';
+
+if (n < 0)
+{
+num1 = n * -1;
+buffer[0] = '-';
 }
-
-/**
- *_isalpha - checks for alphabetic character
- *@c: The character to input
- *Return: 1 if c is alphabetic, 0 otherwise
- */
-
-int _isalpha(int c)
+else
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	else
-		return (0);
+num1 = n;
+}
+length--;
+do {
+	*(buffer + length) = (num1 % 10) + '0';
+	num1 = num1 / 10;
+	length--;
+}
+while (num1 > 0)
+return (buffer);
 }
 
 /**
  *_atoi - converts a string to an integer
- *@s: the string to be converted
+ *@str : the string to be converted
  *Return: 0 if no numbers in string, converted number otherwise
  */
 
-int _atoi(char *s)
+int _atoi(char *str)
+
 {
-	int i, sign = 1, flag = 0, output;
+	int e, sign = 1, flag = 0, output;
 	unsigned int result = 0;
 
-	for (i = 0;  s[i] != '\0' && flag != 2; i++)
+	for (e = 0;  str[e] != '\0' && flag != 2; e++)
 	{
-		if (s[i] == '-')
-			sign *= -1;
+		if (str[e] == '-')
+		sign *= -1;
 
-		if (s[i] >= '0' && s[i] <= '9')
+		if (str[e] >= '0' && str[e] <= '9')
 		{
 			flag = 1;
 			result *= 10;
-			result += (s[i] - '0');
+			result += (str[e]   - '0');
 		}
 		else if (flag == 1)
-			flag = 2;
+		flag = 2;
 	}
 
-	if (sign == -1)
+		if (sign == -1)
 		output = -result;
-	else
+		else
 		output = result;
 
-	return (output);
+		return (output);
 }
